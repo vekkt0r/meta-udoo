@@ -31,7 +31,7 @@ inherit core-image
 
 
 # Needed by resize-rootfs
-IMAGE_DEPENDS_ext4 = "e2fsprogs-native"
+do_image_ext4[depends] += "e2fsprogs-native:do_populate_sysroot"
 IMAGE_CMD_ext4_arm_append () {
         # Label the disk rootfs
         e2label ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4 rootfs

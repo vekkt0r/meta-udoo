@@ -8,7 +8,7 @@ UBOOT_CONFIG ??= "sd"
 SPL_BINARY = "SPL"
 
 # We use WIC for image creation
-IMAGE_DEPENDS_wic_append = " virtual/bootloader"
+do_image_wic[depends] += "virtual/bootloader:do_populate_sysroot"
 WKS_FILE = "udoo-sdcard.wks" 
 IMAGE_FSTYPES = "wic.bz2"
 
