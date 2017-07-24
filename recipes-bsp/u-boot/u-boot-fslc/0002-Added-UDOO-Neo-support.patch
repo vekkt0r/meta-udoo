@@ -1,13 +1,13 @@
-From 46a2cb22bfe7bf6e88b16ae546004ef15ddeebf1 Mon Sep 17 00:00:00 2001
+From d92507ca97ff3919fa8144a2ca34fe27fc59bc48 Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Fri, 30 Dec 2016 08:20:10 +0100
-Subject: [PATCH 2/5] Added UDOO Neo support
+Subject: [PATCH 2/6] Added UDOO Neo support
 
 This is a rebased version of the original patch from Francesco Montefoschi
 
 Signed-off-by: Francesco Montefoschi <francesco.monte@gmail.com>
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
-Signed-off-by: Drew Moseley <drew.moseley@mender.io>
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
 ---
  board/udoo/common/Makefile       |   7 ++
  board/udoo/common/trim.c         |  34 ++++++++
@@ -377,7 +377,7 @@ index 1d6d9f8..18f5bf9 100644
 +obj-y  := udoo.o
 +obj-$(CONFIG_SPL_BUILD)  += udoo_spl.o
 diff --git a/board/udoo/quad_dual/udoo.c b/board/udoo/quad_dual/udoo.c
-index 8773985..50a2dc6 100644
+index 1926be6..c1ad341 100644
 --- a/board/udoo/quad_dual/udoo.c
 +++ b/board/udoo/quad_dual/udoo.c
 @@ -24,6 +24,7 @@

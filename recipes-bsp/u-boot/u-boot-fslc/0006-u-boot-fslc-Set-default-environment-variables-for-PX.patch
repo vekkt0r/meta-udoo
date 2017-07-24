@@ -1,16 +1,16 @@
-From 2e7d7aa03525954de2d5e9b352732d788e2ad024 Mon Sep 17 00:00:00 2001
-From: Drew Moseley <drew.moseley@mender.io>
+From fcc3a6e642df0c83f9e369038cf97c5462094584 Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
 Date: Wed, 31 May 2017 17:50:59 -0400
-Subject: [PATCH 6/7] u-boot-fslc: Set default environment variables for PXE
+Subject: [PATCH 6/6] u-boot-fslc: Set default environment variables for PXE
  usage
 
-Signed-off-by: Drew Moseley <drew.moseley@mender.io>
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
 ---
  include/configs/udoo_neo.h | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/include/configs/udoo_neo.h b/include/configs/udoo_neo.h
-index 1d737cc..7fd9422 100644
+index c6f39c3..18833c4 100644
 --- a/include/configs/udoo_neo.h
 +++ b/include/configs/udoo_neo.h
 @@ -68,6 +68,7 @@
@@ -19,8 +19,8 @@ index 1d737cc..7fd9422 100644
  #define CONFIG_SYS_MEMTEST_START	0x80000000
 +#define CONFIG_LOADADDR			0x82000000
  #define CONFIG_SYS_MEMTEST_END		(CONFIG_SYS_MEMTEST_START + 0x10000)
- #define CONFIG_STACKSIZE		SZ_128K
  
+ /* Physical Memory Map */
 -- 
 2.7.4
 

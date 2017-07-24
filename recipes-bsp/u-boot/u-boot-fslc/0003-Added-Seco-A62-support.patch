@@ -1,14 +1,14 @@
-From a1fcfc361ed83f0ac9328d6367fec2f31136403d Mon Sep 17 00:00:00 2001
+From 8b07ba0439000321d8e9f5fe5ed3ecc81f05b347 Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Fri, 30 Dec 2016 09:51:52 +0100
-Subject: [PATCH 3/5] Added Seco A62 support
+Subject: [PATCH 3/6] Added Seco A62 support
 
 This adds support for the industrial UDOO variant without Arduino
 
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
-Signed-off-by: Drew Moseley <drew.moseley@mender.io>
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
 ---
- arch/arm/cpu/armv7/mx6/Kconfig  |   5 +
+ arch/arm/mach-imx/mx6/Kconfig   |   5 +
  board/udoo/a62/Kconfig          |  15 ++
  board/udoo/a62/MAINTAINERS      |   7 +
  board/udoo/a62/Makefile         |  12 +
@@ -36,11 +36,11 @@ Signed-off-by: Drew Moseley <drew.moseley@mender.io>
  create mode 100644 drivers/watchdog/apx_watchdog.c
  create mode 100644 include/configs/udoo_a62.h
 
-diff --git a/arch/arm/cpu/armv7/mx6/Kconfig b/arch/arm/cpu/armv7/mx6/Kconfig
-index 4b31e6d..1503b82 100644
---- a/arch/arm/cpu/armv7/mx6/Kconfig
-+++ b/arch/arm/cpu/armv7/mx6/Kconfig
-@@ -311,6 +311,10 @@ config TARGET_SAMTEC_VINING_2000
+diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
+index af07c67..ca5bde8 100644
+--- a/arch/arm/mach-imx/mx6/Kconfig
++++ b/arch/arm/mach-imx/mx6/Kconfig
+@@ -359,6 +359,10 @@ config TARGET_SAMTEC_VINING_2000
  	select DM
  	select DM_THERMAL
  
@@ -51,7 +51,7 @@ index 4b31e6d..1503b82 100644
  config TARGET_WANDBOARD
  	bool "wandboard"
  	select BOARD_LATE_INIT
-@@ -386,6 +390,7 @@ source "board/toradex/apalis_imx6/Kconfig"
+@@ -437,6 +441,7 @@ source "board/toradex/apalis_imx6/Kconfig"
  source "board/toradex/colibri_imx6/Kconfig"
  source "board/udoo/quad_dual/Kconfig"
  source "board/udoo/neo/Kconfig"
@@ -1117,21 +1117,25 @@ index 0000000..1b35fc9
 +CONFIG_APX_WATCHDOG=y
 +CONFIG_MXC_SPI_CSHOLD=y
 diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index e69de29..513920a 100644
+index b911233..7634020 100644
 --- a/drivers/watchdog/Kconfig
 +++ b/drivers/watchdog/Kconfig
-@@ -0,0 +1,3 @@
+@@ -62,4 +62,7 @@ config WDT_BCM6345
+ 	  The watchdog timer is stopped when initialized.
+ 	  It performs full SoC reset.
+ 
 +config APX_WATCHDOG
 +        bool "Support watchdog APX drivers"
 +
+ endmenu
 diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
-index a007ae8..c36a24d 100644
+index 4b19e4c..e6535ef 100644
 --- a/drivers/watchdog/Makefile
 +++ b/drivers/watchdog/Makefile
-@@ -15,3 +15,4 @@ obj-$(CONFIG_XILINX_TB_WATCHDOG) += xilinx_tb_wdt.o
- obj-$(CONFIG_BFIN_WATCHDOG)  += bfin_wdt.o
- obj-$(CONFIG_OMAP_WATCHDOG) += omap_wdt.o
- obj-$(CONFIG_DESIGNWARE_WATCHDOG) += designware_wdt.o
+@@ -20,3 +20,4 @@ obj-$(CONFIG_WDT_SANDBOX) += sandbox_wdt.o
+ obj-$(CONFIG_WDT_ASPEED) += ast_wdt.o
+ obj-$(CONFIG_WDT_BCM6345) += bcm6345_wdt.o
+ obj-$(CONFIG_BCM2835_WDT)       += bcm2835_wdt.o
 +obj-$(CONFIG_APX_WATCHDOG) += apx_watchdog.o
 diff --git a/drivers/watchdog/apx_watchdog.c b/drivers/watchdog/apx_watchdog.c
 new file mode 100644

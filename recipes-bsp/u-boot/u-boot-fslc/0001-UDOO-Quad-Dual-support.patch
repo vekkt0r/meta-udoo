@@ -1,13 +1,13 @@
-From f919434d165d28373024251d0cc9c124abd743aa Mon Sep 17 00:00:00 2001
+From 5470384a4617d47feebafa6f995d8549bb469c7c Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Tue, 27 Dec 2016 21:44:43 +0100
-Subject: [PATCH 1/5] UDOO Quad/Dual support
+Subject: [PATCH 1/6] UDOO Quad/Dual support
 
 Signed-off-by: Francesco Montefoschi <francesco.monte@gmail.com>
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
-Signed-off-by: Drew Moseley <drew.moseley@mender.io>
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
 ---
- arch/arm/cpu/armv7/mx6/Kconfig   |   6 +-
+ arch/arm/mach-imx/mx6/Kconfig    |   6 +-
  board/udoo/Kconfig               |   9 -
  board/udoo/MAINTAINERS           |   6 -
  board/udoo/Makefile              |   7 -
@@ -34,11 +34,11 @@ Signed-off-by: Drew Moseley <drew.moseley@mender.io>
  create mode 100644 configs/udoo_quad_dual_defconfig
  create mode 100644 include/configs/udoo_quad_dual.h
 
-diff --git a/arch/arm/cpu/armv7/mx6/Kconfig b/arch/arm/cpu/armv7/mx6/Kconfig
-index 744d67a..4b31e6d 100644
---- a/arch/arm/cpu/armv7/mx6/Kconfig
-+++ b/arch/arm/cpu/armv7/mx6/Kconfig
-@@ -291,8 +291,8 @@ config TARGET_TQMA6
+diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
+index 4a38dc2..af07c67 100644
+--- a/arch/arm/mach-imx/mx6/Kconfig
++++ b/arch/arm/mach-imx/mx6/Kconfig
+@@ -339,8 +339,8 @@ config TARGET_TQMA6
  	bool "TQ Systems TQMa6 board"
  	select BOARD_LATE_INIT
  
@@ -49,7 +49,7 @@ index 744d67a..4b31e6d 100644
  	select BOARD_LATE_INIT
  	select SUPPORT_SPL
  
-@@ -384,7 +384,7 @@ source "board/tbs/tbs2910/Kconfig"
+@@ -435,7 +435,7 @@ source "board/tbs/tbs2910/Kconfig"
  source "board/tqc/tqma6/Kconfig"
  source "board/toradex/apalis_imx6/Kconfig"
  source "board/toradex/colibri_imx6/Kconfig"
@@ -143,7 +143,7 @@ index 0000000..1d6d9f8
 +obj-y  := udoo.o udoo_spl.o
 diff --git a/board/udoo/quad_dual/udoo.c b/board/udoo/quad_dual/udoo.c
 new file mode 100644
-index 0000000..8773985
+index 0000000..1926be6
 --- /dev/null
 +++ b/board/udoo/quad_dual/udoo.c
 @@ -0,0 +1,363 @@
@@ -163,8 +163,8 @@ index 0000000..8773985
 +#include <asm/arch/mx6-pins.h>
 +#include <linux/errno.h>
 +#include <asm/gpio.h>
-+#include <asm/imx-common/iomux-v3.h>
-+#include <asm/imx-common/sata.h>
++#include <asm/mach-imx/iomux-v3.h>
++#include <asm/mach-imx/sata.h>
 +#include <mmc.h>
 +#include <fsl_esdhc.h>
 +#include <asm/arch/crm_regs.h>
@@ -512,7 +512,7 @@ index 0000000..8773985
 +);
 diff --git a/board/udoo/quad_dual/udoo_spl.c b/board/udoo/quad_dual/udoo_spl.c
 new file mode 100644
-index 0000000..c89a6b6
+index 0000000..59ea395
 --- /dev/null
 +++ b/board/udoo/quad_dual/udoo_spl.c
 @@ -0,0 +1,271 @@
@@ -528,8 +528,8 @@ index 0000000..c89a6b6
 +#include <asm/arch/mx6-pins.h>
 +#include <linux/errno.h>
 +#include <asm/gpio.h>
-+#include <asm/imx-common/iomux-v3.h>
-+#include <asm/imx-common/video.h>
++#include <asm/mach-imx/iomux-v3.h>
++#include <asm/mach-imx/video.h>
 +#include <mmc.h>
 +#include <fsl_esdhc.h>
 +#include <asm/arch/crm_regs.h>
@@ -789,7 +789,7 @@ index 0000000..c89a6b6
 +#endif
 diff --git a/board/udoo/udoo.c b/board/udoo/udoo.c
 deleted file mode 100644
-index eb7ab65..0000000
+index 6c29161..0000000
 --- a/board/udoo/udoo.c
 +++ /dev/null
 @@ -1,273 +0,0 @@
@@ -808,8 +808,8 @@ index eb7ab65..0000000
 -#include <asm/arch/mx6-pins.h>
 -#include <linux/errno.h>
 -#include <asm/gpio.h>
--#include <asm/imx-common/iomux-v3.h>
--#include <asm/imx-common/sata.h>
+-#include <asm/mach-imx/iomux-v3.h>
+-#include <asm/mach-imx/sata.h>
 -#include <mmc.h>
 -#include <fsl_esdhc.h>
 -#include <asm/arch/crm_regs.h>
@@ -1068,7 +1068,7 @@ index eb7ab65..0000000
 -}
 diff --git a/board/udoo/udoo_spl.c b/board/udoo/udoo_spl.c
 deleted file mode 100644
-index f24d21e..0000000
+index e83e7c3..0000000
 --- a/board/udoo/udoo_spl.c
 +++ /dev/null
 @@ -1,273 +0,0 @@
@@ -1086,8 +1086,8 @@ index f24d21e..0000000
 -#include <asm/arch/mx6-pins.h>
 -#include <linux/errno.h>
 -#include <asm/gpio.h>
--#include <asm/imx-common/iomux-v3.h>
--#include <asm/imx-common/video.h>
+-#include <asm/mach-imx/iomux-v3.h>
+-#include <asm/mach-imx/video.h>
 -#include <mmc.h>
 -#include <fsl_esdhc.h>
 -#include <asm/arch/crm_regs.h>
