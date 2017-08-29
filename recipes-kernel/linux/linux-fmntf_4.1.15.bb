@@ -25,6 +25,7 @@ UDOOBOARD_GITHUB_MIRROR ?= "git://github.com/fmntf/linux_kernel.git"
 SRC_URI = "${UDOOBOARD_GITHUB_MIRROR};branch=${SRCBRANCH} \
            file://0003-fix-build-acc-gyro.patch \
            file://0005-add-support-for-gcc6.patch \
+           file://0001-Revert-wlcore-add-version-and-timestamp-strings-INTE.patch \
            file://defconfig \
 "
 

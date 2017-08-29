@@ -1,0 +1,127 @@
+From bc7a132a7e011f632f90027cea7d8fb2b898acb4 Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Mon, 28 Aug 2017 23:14:17 -0400
+Subject: [PATCH] Revert "wlcore: add version and timestamp strings (INTERNAL)"
+
+This reverts commit b95b87aad2b1e69ef1c4e93d0e127f9f1c84fdfc.
+---
+ drivers/net/wireless/ti/.gitignore               |  1 -
+ drivers/net/wireless/ti/wlcore/Makefile          | 41 ------------------------
+ drivers/net/wireless/ti/wlcore/debugfs.c         |  3 --
+ drivers/net/wireless/ti/wlcore/main.c            |  3 --
+ drivers/net/wireless/ti/wlcore/release_version.h |  1 -
+ 5 files changed, 49 deletions(-)
+ delete mode 100644 drivers/net/wireless/ti/.gitignore
+ delete mode 100644 drivers/net/wireless/ti/wlcore/release_version.h
+
+diff --git a/drivers/net/wireless/ti/.gitignore b/drivers/net/wireless/ti/.gitignore
+deleted file mode 100644
+index 6702033..0000000
+--- a/drivers/net/wireless/ti/.gitignore
++++ /dev/null
+@@ -1 +0,0 @@
+-version.h
+diff --git a/drivers/net/wireless/ti/wlcore/Makefile b/drivers/net/wireless/ti/wlcore/Makefile
+index 205ca9f..0a69c13 100644
+--- a/drivers/net/wireless/ti/wlcore/Makefile
++++ b/drivers/net/wireless/ti/wlcore/Makefile
+@@ -1,47 +1,6 @@
+ wlcore-objs		= main.o cmd.o io.o event.o tx.o rx.o ps.o acx.o \
+ 			  boot.o init.o debugfs.o scan.o sysfs.o vendor_cmd.o
+ 
+-# use special params for the compat case
+-ifneq ($(KLIB_BUILD),)
+-ifneq ($(GIT_TREE),)
+-GIT_PATH := $(GIT_TREE)/
+-GIT_CHDIR_CMD := cd $(GIT_TREE) &&
+-endif
+-endif
+-
+-ifneq ($(GIT_PATH),)
+-GIT_CHECK_PATH := $(GIT_PATH)
+-else
+-GIT_CHECK_PATH := $(PWD)/
+-endif
+-
+-ifeq ($(wildcard $(GIT_CHECK_PATH).git/HEAD),)
+-# use release_version.h if .git not exists
+-WLCORE_VERSION_DEPS := $(src)/release_version.h
+-
+-define filechk_version.h
+-	(cat $(src)/release_version.h)
+-endef
+-
+-else
+-# use git describe to determine version
+-WLCORE_VERSION_DEPS := $(GIT_PATH).git/HEAD $(GIT_PATH).git/index $(GIT_PATH).git/refs/tags
+-
+-define filechk_version.h
+-	(echo 'static const char *wlcore_git_head = \
+-			"$(shell $(GIT_CHDIR_CMD) git describe --dirty)";')
+-endef
+-
+-endif
+-
+-$(obj)/version.h: $(WLCORE_VERSION_DEPS)
+-	@$(call filechk,version.h)
+-
+-# seems like in some cases, for unknown reason,
+-# this dependency is not enforced implictly,
+-# so add it explicitly
+-$(obj)/main.c: $(src)/version.h
+-
+ wlcore_spi-objs 	= spi.o
+ wlcore_sdio-objs	= sdio.o
+ 
+diff --git a/drivers/net/wireless/ti/wlcore/debugfs.c b/drivers/net/wireless/ti/wlcore/debugfs.c
+index ac2ebf9..cbf1eb0 100644
+--- a/drivers/net/wireless/ti/wlcore/debugfs.c
++++ b/drivers/net/wireless/ti/wlcore/debugfs.c
+@@ -35,7 +35,6 @@
+ #include "io.h"
+ #include "tx.h"
+ #include "hw_ops.h"
+-#include "version.h"
+ 
+ /* ms */
+ #define WL1271_DEBUGFS_STATS_LIFETIME 1000
+@@ -463,8 +462,6 @@ static ssize_t driver_state_read(struct file *file, char __user *user_buf,
+ #define DRIVER_STATE_PRINT_LHEX(x) DRIVER_STATE_PRINT(x, "0x%lx")
+ #define DRIVER_STATE_PRINT_HEX(x)  DRIVER_STATE_PRINT(x, "0x%x")
+ 
+-	DRIVER_STATE_PRINT_GENERIC(version, "%s", wlcore_git_head);
+-
+ 	wl12xx_for_each_wlvif_sta(wl, wlvif) {
+ 		if (!test_bit(WLVIF_FLAG_STA_ASSOCIATED, &wlvif->flags))
+ 			continue;
+diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
+index 4d5ff76..25d4200 100644
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -40,7 +40,6 @@
+ #include "scan.h"
+ #include "hw_ops.h"
+ #include "sysfs.h"
+-#include "version.h"
+ 
+ #define WL1271_BOOT_RETRIES 3
+ 
+@@ -6532,8 +6531,6 @@ static void wlcore_nvs_cb(const struct firmware *fw, void *context)
+ 		goto out_unreg;
+ 
+ 	wl->initialized = true;
+-
+-	wl1271_info("driver version: %s", wlcore_git_head);
+ 	goto out;
+ 
+ out_unreg:
+diff --git a/drivers/net/wireless/ti/wlcore/release_version.h b/drivers/net/wireless/ti/wlcore/release_version.h
+deleted file mode 100644
+index ddac2b6..0000000
+--- a/drivers/net/wireless/ti/wlcore/release_version.h
++++ /dev/null
+@@ -1 +0,0 @@
+-static const char *wlcore_git_head = "R8.6_SP1";
+-- 
+2.7.4
+
