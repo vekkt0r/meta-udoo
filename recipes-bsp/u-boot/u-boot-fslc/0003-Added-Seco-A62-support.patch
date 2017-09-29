@@ -1,7 +1,7 @@
-From 8b07ba0439000321d8e9f5fe5ed3ecc81f05b347 Mon Sep 17 00:00:00 2001
-From: Christian Ege <k4230r6@gmail.com>
-Date: Fri, 30 Dec 2016 09:51:52 +0100
-Subject: [PATCH 3/6] Added Seco A62 support
+From d354a54e04dac9403dfb759aea0db34b9c7c15dc Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Fri, 29 Sep 2017 11:41:46 -0400
+Subject: [PATCH] Added Seco A62 support
 
 This adds support for the industrial UDOO variant without Arduino
 
@@ -37,10 +37,10 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  create mode 100644 include/configs/udoo_a62.h
 
 diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
-index af07c67..ca5bde8 100644
+index f56347e..fda272d 100644
 --- a/arch/arm/mach-imx/mx6/Kconfig
 +++ b/arch/arm/mach-imx/mx6/Kconfig
-@@ -359,6 +359,10 @@ config TARGET_SAMTEC_VINING_2000
+@@ -381,6 +381,10 @@ config TARGET_SAMTEC_VINING_2000
  	select DM
  	select DM_THERMAL
  
@@ -51,7 +51,7 @@ index af07c67..ca5bde8 100644
  config TARGET_WANDBOARD
  	bool "wandboard"
  	select BOARD_LATE_INIT
-@@ -437,6 +441,7 @@ source "board/toradex/apalis_imx6/Kconfig"
+@@ -460,6 +464,7 @@ source "board/toradex/apalis_imx6/Kconfig"
  source "board/toradex/colibri_imx6/Kconfig"
  source "board/udoo/quad_dual/Kconfig"
  source "board/udoo/neo/Kconfig"
@@ -1117,25 +1117,25 @@ index 0000000..1b35fc9
 +CONFIG_APX_WATCHDOG=y
 +CONFIG_MXC_SPI_CSHOLD=y
 diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index b911233..7634020 100644
+index fc46b67..48122d0 100644
 --- a/drivers/watchdog/Kconfig
 +++ b/drivers/watchdog/Kconfig
-@@ -62,4 +62,7 @@ config WDT_BCM6345
- 	  The watchdog timer is stopped when initialized.
- 	  It performs full SoC reset.
+@@ -78,4 +78,7 @@ config WDT_ORION
+ 	   Select this to enable Orion watchdog timer, which can be found on some
+ 	   Marvell Armada chips.
  
 +config APX_WATCHDOG
 +        bool "Support watchdog APX drivers"
 +
  endmenu
 diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
-index 4b19e4c..e6535ef 100644
+index ab6a6b7..1bf90e0 100644
 --- a/drivers/watchdog/Makefile
 +++ b/drivers/watchdog/Makefile
-@@ -20,3 +20,4 @@ obj-$(CONFIG_WDT_SANDBOX) += sandbox_wdt.o
- obj-$(CONFIG_WDT_ASPEED) += ast_wdt.o
+@@ -22,3 +22,4 @@ obj-$(CONFIG_WDT_ASPEED) += ast_wdt.o
  obj-$(CONFIG_WDT_BCM6345) += bcm6345_wdt.o
  obj-$(CONFIG_BCM2835_WDT)       += bcm2835_wdt.o
+ obj-$(CONFIG_WDT_ORION) += orion_wdt.o
 +obj-$(CONFIG_APX_WATCHDOG) += apx_watchdog.o
 diff --git a/drivers/watchdog/apx_watchdog.c b/drivers/watchdog/apx_watchdog.c
 new file mode 100644
