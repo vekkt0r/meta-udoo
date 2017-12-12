@@ -2,7 +2,6 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 include linux-udooboard.inc
-require recipes-kernel/linux/linux-dtb.inc
 
 SRCREV = "77702fa515d1276bc0a1e7b62e326937f8451f37"
 
