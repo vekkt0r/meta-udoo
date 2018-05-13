@@ -33,6 +33,6 @@ SRC_URI_append_secosbca62 = "\
 "
 
 SRC_URI_append_udooneo = " \
-    ${@base_conditional("ENABLE_CAN_BUS", "1", "file://0001-Enable-FlexCAN-interfaces-for-UDOO-Neo.patch", "", d)} \
-    ${@base_conditional("ENABLE_SPI_BUS", "1", "file://0020-udooneo-enable-ecspi2.patch", "", d)} \
+    ${@oe.utils.conditional("ENABLE_CAN_BUS", "1", "file://0001-Enable-FlexCAN-interfaces-for-UDOO-Neo.patch", "", d)} \
+    ${@oe.utils.conditional("ENABLE_SPI_BUS", "1", "file://0020-udooneo-enable-ecspi2.patch", "", d)} \
 "

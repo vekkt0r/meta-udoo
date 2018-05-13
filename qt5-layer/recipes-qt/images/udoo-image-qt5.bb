@@ -15,7 +15,7 @@ UDOO_TOOLS = " \
     ${@bb.utils.contains("MACHINE_FEATURES", "usbhost", "packagegroup-base-usbhost", "", d)} \
     i2c-tools \
     resize-rootfs \
-    ${@base_conditional("ENABLE_CAN_BUS", "1", "canutils", "", d)} \
+    ${@oe.utils.conditional("ENABLE_CAN_BUS", "1", "canutils", "", d)} \
     minicom \
 "
 
