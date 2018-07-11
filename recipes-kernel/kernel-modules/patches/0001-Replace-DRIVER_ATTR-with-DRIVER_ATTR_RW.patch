@@ -1,0 +1,71 @@
+From d8a379ed7b880b5599dc8522fe9ca35107a8ad9a Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Thu, 12 Jul 2018 04:06:18 +0000
+Subject: [PATCH] Replace DRIVER_ATTR with DRIVER_ATTR_RW
+
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+---
+ .../kernel/platform/freescale/gc_hal_kernel_platform_imx.c   | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/platform/freescale/gc_hal_kernel_platform_imx.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/platform/freescale/gc_hal_kernel_platform_imx.c
+index ffa8d8a..c656ac5 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/platform/freescale/gc_hal_kernel_platform_imx.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/platform/freescale/gc_hal_kernel_platform_imx.c
+@@ -315,7 +315,7 @@ static struct notifier_block thermal_hot_pm_notifier =
+     .notifier_call = thermal_hot_pm_notify,
+ };
+ 
+-static ssize_t show_gpu3DMinClock(struct device_driver *dev, char *buf)
++static ssize_t gpu3DMinClock_show(struct device_driver *dev, char *buf)
+ {
+     gctUINT currentf,minf,maxf;
+     gckGALDEVICE galDevice;
+@@ -333,7 +333,7 @@ static ssize_t show_gpu3DMinClock(struct device_driver *dev, char *buf)
+     return strlen(buf);
+ }
+ 
+-static ssize_t update_gpu3DMinClock(struct device_driver *dev, const char *buf, size_t count)
++static ssize_t gpu3DMinClock_store(struct device_driver *dev, const char *buf, size_t count)
+ {
+ 
+     gctINT fields;
+@@ -355,7 +355,7 @@ static ssize_t update_gpu3DMinClock(struct device_driver *dev, const char *buf,
+     return count;
+ }
+ 
+-static DRIVER_ATTR(gpu3DMinClock, S_IRUGO | S_IWUSR, show_gpu3DMinClock, update_gpu3DMinClock);
++static DRIVER_ATTR_RW(gpu3DMinClock);
+ #endif
+ 
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
+@@ -419,7 +419,7 @@ struct imx_priv
+ static struct imx_priv imxPriv;
+ 
+ #if defined(CONFIG_PM_OPP)
+-static ssize_t show_gpuMode(struct device_driver *dev, char *buf)
++static ssize_t gpu_mode_show(struct device_driver *dev, char *buf)
+ {
+     struct imx_priv *priv = &imxPriv;
+     char buffer[512];
+@@ -468,7 +468,7 @@ static ssize_t show_gpuMode(struct device_driver *dev, char *buf)
+     return strlen(buf);
+ }
+ 
+-static ssize_t update_gpuMode(struct device_driver *dev, const char *buf, size_t count)
++static ssize_t gpu_mode_store(struct device_driver *dev, const char *buf, size_t count)
+ {
+     unsigned long core_freq = 0;
+     unsigned long shader_freq = 0;
+@@ -513,7 +513,7 @@ static ssize_t update_gpuMode(struct device_driver *dev, const char *buf, size_t
+     return count;
+ }
+ 
+-static DRIVER_ATTR(gpu_mode, S_IRUGO | S_IWUSR, show_gpuMode, update_gpuMode);
++static DRIVER_ATTR_RW(gpu_mode)
+ 
+ int init_gpu_opp_table(struct device *dev)
+ {
+-- 
+2.7.4
+

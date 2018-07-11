@@ -1,0 +1,26 @@
+From 135318259bd574447e44e585f7723012b1aede75 Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Wed, 11 Jul 2018 21:56:37 +0000
+Subject: [PATCH] Rename sched.h to sched/signal.h
+
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+---
+ kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
+index 86ff08a..9428fea 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
+@@ -61,7 +61,7 @@
+ #include <linux/module.h>
+ #include <linux/fs.h>
+ #include <linux/mm.h>
+-#include <linux/sched.h>
++#include <linux/sched/signal.h>
+ #include <linux/signal.h>
+ #include <linux/interrupt.h>
+ #include <linux/vmalloc.h>
+-- 
+2.7.4
+

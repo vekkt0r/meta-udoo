@@ -1,0 +1,127 @@
+From e4946f9897dc12b88047c7331c7258167cded36f Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Wed, 11 Jul 2018 21:47:31 +0000
+Subject: [PATCH] Rename dma-mapping.h to dma-direct.h
+
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+---
+ .../os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dma.c   | 2 +-
+ .../linux/kernel/allocator/default/gc_hal_kernel_allocator_dmabuf.c   | 2 +-
+ .../os/linux/kernel/allocator/default/gc_hal_kernel_allocator_gfp.c   | 2 +-
+ .../kernel/allocator/default/gc_hal_kernel_allocator_reserved_mem.c   | 2 +-
+ .../os/linux/kernel/allocator/freescale/gc_hal_kernel_allocator_cma.c | 4 ++--
+ .../hal/os/linux/kernel/gc_hal_kernel_allocator.c                     | 2 +-
+ .../hal/os/linux/kernel/gc_hal_kernel_linux.h                         | 2 +-
+ kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_os.c  | 2 +-
+ 8 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dma.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dma.c
+index 5aeeaaf..08e1c0d 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dma.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dma.c
+@@ -60,7 +60,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #include <linux/platform_device.h>
+ 
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dmabuf.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dmabuf.c
+index 3883f52..4488ea7 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dmabuf.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_dmabuf.c
+@@ -62,7 +62,7 @@
+ #include <linux/slab.h>
+ #include <linux/mutex.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ 
+ #include <linux/dma-buf.h>
+ #include <linux/platform_device.h>
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_gfp.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_gfp.c
+index 20a1633..6ea3a4e 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_gfp.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_gfp.c
+@@ -59,7 +59,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ 
+ #include "gc_hal_kernel_platform.h"
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_reserved_mem.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_reserved_mem.c
+index 52518c1..9529890 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_reserved_mem.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/default/gc_hal_kernel_allocator_reserved_mem.c
+@@ -59,7 +59,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
+ #include <linux/ioport.h>
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/freescale/gc_hal_kernel_allocator_cma.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/freescale/gc_hal_kernel_allocator_cma.c
+index 6e787c9..0c013d7 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/freescale/gc_hal_kernel_allocator_cma.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/allocator/freescale/gc_hal_kernel_allocator_cma.c
+@@ -60,9 +60,9 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/platform_device.h>
+ 
+ #define _GC_OBJ_ZONE    gcvZONE_OS
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_allocator.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_allocator.c
+index 85b52d5..fe7a4db 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_allocator.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_allocator.c
+@@ -59,7 +59,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 32)
+ #include <linux/anon_inodes.h>
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
+index f1ae2b1..86ff08a 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_linux.h
+@@ -65,7 +65,7 @@
+ #include <linux/signal.h>
+ #include <linux/interrupt.h>
+ #include <linux/vmalloc.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/kthread.h>
+ 
+ #include <linux/idr.h>
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_os.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_os.c
+index e34fbe6..7224d24 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_os.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_os.c
+@@ -59,7 +59,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/mman.h>
+ #include <asm/atomic.h>
+-#include <linux/dma-mapping.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #include <linux/workqueue.h>
+ #include <linux/irqflags.h>
+-- 
+2.7.4
+
