@@ -1,13 +1,14 @@
-From d92507ca97ff3919fa8144a2ca34fe27fc59bc48 Mon Sep 17 00:00:00 2001
+From 321401ed5d9502922aebafbbbbba635239a17ccd Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Fri, 30 Dec 2016 08:20:10 +0100
-Subject: [PATCH 2/6] Added UDOO Neo support
+Subject: [PATCH] Added UDOO Neo support
 
 This is a rebased version of the original patch from Francesco Montefoschi
 
 Signed-off-by: Francesco Montefoschi <francesco.monte@gmail.com>
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
 Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+
 ---
  board/udoo/common/Makefile       |   7 ++
  board/udoo/common/trim.c         |  34 ++++++++
@@ -452,7 +453,7 @@ index 1926be6..c1ad341 100644
  	printf("Device Tree: %s\n", fdt_file);
  	setenv("fdt_file", fdt_file);
 diff --git a/include/configs/udoo_quad_dual.h b/include/configs/udoo_quad_dual.h
-index d9deef5..c532639 100644
+index af17bbf..d8fa621 100644
 --- a/include/configs/udoo_quad_dual.h
 +++ b/include/configs/udoo_quad_dual.h
 @@ -81,7 +81,7 @@
@@ -464,6 +465,3 @@ index d9deef5..c532639 100644
  	"fdt_addr=0x18000000\0" \
  	"boot_fdt=try\0" \
  	"ip_dyn=yes\0" \
--- 
-2.7.4
-

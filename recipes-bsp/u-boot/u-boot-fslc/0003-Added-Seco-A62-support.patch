@@ -1,4 +1,4 @@
-From d354a54e04dac9403dfb759aea0db34b9c7c15dc Mon Sep 17 00:00:00 2001
+From 8999184c341f7f48bf1750cff88b021ed37678a9 Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Fri, 29 Sep 2017 11:41:46 -0400
 Subject: [PATCH] Added Seco A62 support
@@ -7,6 +7,7 @@ This adds support for the industrial UDOO variant without Arduino
 
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
 Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+
 ---
  arch/arm/mach-imx/mx6/Kconfig   |   5 +
  board/udoo/a62/Kconfig          |  15 ++
@@ -37,10 +38,10 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  create mode 100644 include/configs/udoo_a62.h
 
 diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
-index f56347e..fda272d 100644
+index acfbe9f..4e5fa35 100644
 --- a/arch/arm/mach-imx/mx6/Kconfig
 +++ b/arch/arm/mach-imx/mx6/Kconfig
-@@ -381,6 +381,10 @@ config TARGET_SAMTEC_VINING_2000
+@@ -426,6 +426,10 @@ config TARGET_SAMTEC_VINING_2000
  	select DM
  	select DM_THERMAL
  
@@ -50,9 +51,9 @@ index f56347e..fda272d 100644
 +
  config TARGET_WANDBOARD
  	bool "wandboard"
- 	select BOARD_LATE_INIT
-@@ -460,6 +464,7 @@ source "board/toradex/apalis_imx6/Kconfig"
- source "board/toradex/colibri_imx6/Kconfig"
+ 	select MX6QDL
+@@ -510,6 +514,7 @@ source "board/toradex/colibri_imx6/Kconfig"
+ source "board/k+p/kp_imx6q_tpc/Kconfig"
  source "board/udoo/quad_dual/Kconfig"
  source "board/udoo/neo/Kconfig"
 +source "board/udoo/a62/Kconfig"
@@ -1117,25 +1118,25 @@ index 0000000..1b35fc9
 +CONFIG_APX_WATCHDOG=y
 +CONFIG_MXC_SPI_CSHOLD=y
 diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index fc46b67..48122d0 100644
+index dca2c90..df38d7d 100644
 --- a/drivers/watchdog/Kconfig
 +++ b/drivers/watchdog/Kconfig
-@@ -78,4 +78,7 @@ config WDT_ORION
- 	   Select this to enable Orion watchdog timer, which can be found on some
- 	   Marvell Armada chips.
+@@ -94,4 +94,7 @@ config WDT_CDNS
+ 	   Select this to enable Cadence watchdog timer, which can be found on some
+ 	   Xilinx Microzed Platform.
  
 +config APX_WATCHDOG
 +        bool "Support watchdog APX drivers"
 +
  endmenu
 diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
-index ab6a6b7..1bf90e0 100644
+index c6f8aa3..432f145 100644
 --- a/drivers/watchdog/Makefile
 +++ b/drivers/watchdog/Makefile
-@@ -22,3 +22,4 @@ obj-$(CONFIG_WDT_ASPEED) += ast_wdt.o
- obj-$(CONFIG_WDT_BCM6345) += bcm6345_wdt.o
- obj-$(CONFIG_BCM2835_WDT)       += bcm2835_wdt.o
+@@ -22,3 +22,4 @@ obj-$(CONFIG_BCM2835_WDT)       += bcm2835_wdt.o
  obj-$(CONFIG_WDT_ORION) += orion_wdt.o
+ obj-$(CONFIG_WDT_CDNS) += cdns_wdt.o
+ obj-$(CONFIG_MPC8xx_WATCHDOG) += mpc8xx_wdt.o
 +obj-$(CONFIG_APX_WATCHDOG) += apx_watchdog.o
 diff --git a/drivers/watchdog/apx_watchdog.c b/drivers/watchdog/apx_watchdog.c
 new file mode 100644
@@ -1193,7 +1194,7 @@ index 0000000..909e908
 +
 diff --git a/include/configs/udoo_a62.h b/include/configs/udoo_a62.h
 new file mode 100644
-index 0000000..1270989
+index 0000000..aa07a34
 --- /dev/null
 +++ b/include/configs/udoo_a62.h
 @@ -0,0 +1,207 @@
@@ -1404,6 +1405,3 @@ index 0000000..1270989
 +
 +
 +#endif			       /* __CONFIG_H * */
--- 
-2.7.4
-
