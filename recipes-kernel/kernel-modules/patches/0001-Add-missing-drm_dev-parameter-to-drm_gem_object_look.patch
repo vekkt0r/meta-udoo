@@ -1,0 +1,107 @@
+From 941333ca838f536718bfebbf2bb8fe6eb2fc02ca Mon Sep 17 00:00:00 2001
+From: Drew Moseley <drew.moseley@northern.tech>
+Date: Thu, 12 Jul 2018 01:21:44 +0000
+Subject: [PATCH] Add missing drm_dev parameter to drm_gem_object_lookup call
+
+Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
+---
+ .../hal/os/linux/kernel/gc_hal_kernel_drm.c          | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_drm.c b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_drm.c
+index b4846cb..dbe4b8e 100644
+--- a/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_drm.c
++++ b/kernel-module-imx-gpu-viv-src/hal/os/linux/kernel/gc_hal_kernel_drm.c
+@@ -238,7 +238,7 @@ static int viv_ioctl_gem_lock(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -279,7 +279,7 @@ static int viv_ioctl_gem_unlock(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -326,7 +326,7 @@ static int viv_ioctl_gem_cache(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -384,7 +384,7 @@ static int viv_ioctl_gem_query(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -427,7 +427,7 @@ static int viv_ioctl_gem_timestamp(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -461,7 +461,7 @@ static int viv_ioctl_gem_set_tiling(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -496,7 +496,7 @@ static int viv_ioctl_gem_get_tiling(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -533,7 +533,7 @@ static int viv_ioctl_gem_attach_aux(struct drm_device *drm, void *data,
+         gcmkONERROR(gcvSTATUS_INVALID_ARGUMENT);
+     }
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -552,7 +552,7 @@ static int viv_ioctl_gem_attach_aux(struct drm_device *drm, void *data,
+         struct viv_gem_object *viv_ts_obj;
+         gckKERNEL kernel = gal_dev->device->map[gal_dev->device->defaultHwType].kernels[0];
+ 
+-        gem_ts_obj = drm_gem_object_lookup(file, args->ts_handle);
++        gem_ts_obj = drm_gem_object_lookup(drm, file, args->ts_handle);
+         if (!gem_ts_obj)
+         {
+             gcmkONERROR(gcvSTATUS_NOT_FOUND);
+@@ -599,7 +599,7 @@ static int viv_ioctl_gem_ref_node(struct drm_device *drm, void *data,
+     }
+     kernel = gal_dev->device->map[gal_dev->device->defaultHwType].kernels[0];
+ 
+-    gem_obj = drm_gem_object_lookup(file, args->handle);
++    gem_obj = drm_gem_object_lookup(drm, file, args->handle);
+     if (!gem_obj)
+     {
+         gcmkONERROR(gcvSTATUS_NOT_FOUND);
+-- 
+2.7.4
+

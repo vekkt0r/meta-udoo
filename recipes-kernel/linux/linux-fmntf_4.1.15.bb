@@ -25,6 +25,8 @@ SRC_URI = "${UDOOBOARD_GITHUB_MIRROR};branch=${SRCBRANCH} \
            file://0003-fix-build-acc-gyro.patch \
            file://0005-add-support-for-gcc6.patch \
            file://0001-Revert-wlcore-add-version-and-timestamp-strings-INTE.patch \
+           file://0001-give-up-on-gcc-ilog2-constant-optimizations.patch \
+           file://0001-Fix-compilation-with-gcc-8.patch \
            file://defconfig \
 "
 
