@@ -1,4 +1,4 @@
-From ad85c7d6ad97defe53dff61eb48f93da66652deb Mon Sep 17 00:00:00 2001
+From 02603740c075b3dee20c84fe35ef4b720346f1f2 Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Wed, 31 May 2017 11:57:06 -0400
 Subject: [PATCH] u-boot-neo: Add CMD_PXE to udoo_neo_defconfig
@@ -10,11 +10,11 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  1 file changed, 1 insertion(+)
 
 diff --git a/configs/udoo_neo_defconfig b/configs/udoo_neo_defconfig
-index 059dc6a..b8bb2be 100644
+index ebd8bfe..5c6412e 100644
 --- a/configs/udoo_neo_defconfig
 +++ b/configs/udoo_neo_defconfig
-@@ -30,3 +30,4 @@ CONFIG_PHYLIB=y
- CONFIG_PHY_MICREL=y
+@@ -32,3 +32,4 @@ CONFIG_PHY_MICREL=y
+ CONFIG_MII=y
  CONFIG_OF_LIBFDT=y
  CONFIG_OF_LIBFDT_OVERLAY=y
 +CONFIG_CMD_PXE=y

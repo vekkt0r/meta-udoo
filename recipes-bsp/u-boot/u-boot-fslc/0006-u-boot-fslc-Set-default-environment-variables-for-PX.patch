@@ -1,4 +1,4 @@
-From 34b7902035bcacfa4df2a2583f6e023ffae16a91 Mon Sep 17 00:00:00 2001
+From c83bc334416ceb5ab7f16963a1335adf597c6728 Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Wed, 31 May 2017 17:50:59 -0400
 Subject: [PATCH] u-boot-fslc: Set default environment variables for PXE usage
@@ -10,7 +10,7 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/configs/udoo_neo.h b/include/configs/udoo_neo.h
-index 2924e31..1a887cb 100644
+index 6ba4270..2e7898d 100644
 --- a/include/configs/udoo_neo.h
 +++ b/include/configs/udoo_neo.h
 @@ -61,6 +61,7 @@

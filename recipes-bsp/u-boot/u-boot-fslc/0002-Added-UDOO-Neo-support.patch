@@ -1,4 +1,4 @@
-From 321401ed5d9502922aebafbbbbba635239a17ccd Mon Sep 17 00:00:00 2001
+From 41b04c5b4c7d6bc1850dac683f4c5ba247ebfb46 Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Fri, 30 Dec 2016 08:20:10 +0100
 Subject: [PATCH] Added UDOO Neo support

@@ -1,4 +1,4 @@
-From c0bc6a3aea4ac1d8e6631c95fb8774c4fcdb8b9b Mon Sep 17 00:00:00 2001
+From e6e2f5cdf822be6c5a0983c8bc354874c465d9da Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Mon, 11 Dec 2017 20:22:52 -0500
 Subject: [PATCH] UDOO Quad/Dual support
@@ -32,10 +32,10 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  create mode 100644 include/configs/udoo_quad_dual.h
 
 diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
-index 98ea1f5..acfbe9f 100644
+index 06c25ba..f1f41d5 100644
 --- a/arch/arm/mach-imx/mx6/Kconfig
 +++ b/arch/arm/mach-imx/mx6/Kconfig
-@@ -405,8 +405,8 @@ config TARGET_TQMA6
+@@ -456,8 +456,8 @@ config TARGET_TQMA6
  	bool "TQ Systems TQMa6 board"
  	select BOARD_LATE_INIT
  
@@ -43,12 +43,12 @@ index 98ea1f5..acfbe9f 100644
 -	bool "udoo"
 +config TARGET_UDOO_QUAD_DUAL
 +	bool "UDOO Quad/Dual"
- 	select MX6QDL
  	select BOARD_LATE_INIT
+ 	select MX6QDL
  	select SUPPORT_SPL
-@@ -508,7 +508,7 @@ source "board/tqc/tqma6/Kconfig"
- source "board/toradex/apalis_imx6/Kconfig"
+@@ -566,7 +566,7 @@ source "board/toradex/apalis_imx6/Kconfig"
  source "board/toradex/colibri_imx6/Kconfig"
+ source "board/toradex/colibri-imx6ull/Kconfig"
  source "board/k+p/kp_imx6q_tpc/Kconfig"
 -source "board/udoo/Kconfig"
 +source "board/udoo/quad_dual/Kconfig"
