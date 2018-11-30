@@ -1,4 +1,4 @@
-From c7db65222819d9f53af92967b3b7e8f3b3c85e89 Mon Sep 17 00:00:00 2001
+From 9a0b8f1414a51f393e6b60ec334def3b6c54e993 Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Fri, 29 Sep 2017 11:41:46 -0400
 Subject: [PATCH] Added Seco A62 support
@@ -1118,12 +1118,12 @@ index 0000000..1b35fc9
 +CONFIG_APX_WATCHDOG=y
 +CONFIG_MXC_SPI_CSHOLD=y
 diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index d545b3e..a5b07a7 100644
+index 02f4e1e..fbbfa69 100644
 --- a/drivers/watchdog/Kconfig
 +++ b/drivers/watchdog/Kconfig
-@@ -111,4 +111,7 @@ config XILINX_TB_WATCHDOG
- 	   Select this to enable Xilinx Axi watchdog timer, which can be found on some
- 	   Xilinx Microblaze Platforms.
+@@ -118,4 +118,7 @@ config IMX_WATCHDOG
+ 	   Select this to enable the IMX and LSCH2 of Layerscape watchdog
+ 	   driver.
  
 +config APX_WATCHDOG
 +        bool "Support watchdog APX drivers"
