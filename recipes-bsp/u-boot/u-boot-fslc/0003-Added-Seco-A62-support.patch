@@ -1,4 +1,4 @@
-From 9a0b8f1414a51f393e6b60ec334def3b6c54e993 Mon Sep 17 00:00:00 2001
+From 901fdd3eb5110c801cb819ed41e67233b51eaf41 Mon Sep 17 00:00:00 2001
 From: Drew Moseley <drew.moseley@northern.tech>
 Date: Fri, 29 Sep 2017 11:41:46 -0400
 Subject: [PATCH] Added Seco A62 support
@@ -7,23 +7,22 @@ This adds support for the industrial UDOO variant without Arduino
 
 Signed-off-by: Christian Ege <k4230r6@gmail.com>
 Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
-
 ---
  arch/arm/mach-imx/mx6/Kconfig   |   5 +
- board/udoo/a62/Kconfig          |  15 ++
+ board/udoo/a62/Kconfig          |  15 +
  board/udoo/a62/MAINTAINERS      |   7 +
  board/udoo/a62/Makefile         |  12 +
- board/udoo/a62/a62.c            | 519 ++++++++++++++++++++++++++++++++++++++++
+ board/udoo/a62/a62.c            | 519 ++++++++++++++++++++++++++++++++
  board/udoo/a62/detectboard.h    |  13 +
- board/udoo/a62/spl.c            | 320 +++++++++++++++++++++++++
+ board/udoo/a62/spl.c            | 320 ++++++++++++++++++++
  board/udoo/common/Makefile      |   2 +-
- board/udoo/common/udooinit.c    |  54 +++++
- board/udoo/common/udooinit.h    |  16 ++
+ board/udoo/common/udooinit.c    |  54 ++++
+ board/udoo/common/udooinit.h    |  16 +
  configs/udoo_a62_defconfig      |  37 +++
  drivers/watchdog/Kconfig        |   3 +
  drivers/watchdog/Makefile       |   1 +
- drivers/watchdog/apx_watchdog.c |  48 ++++
- include/configs/udoo_a62.h      | 207 ++++++++++++++++
+ drivers/watchdog/apx_watchdog.c |  48 +++
+ include/configs/udoo_a62.h      | 207 +++++++++++++
  15 files changed, 1258 insertions(+), 1 deletion(-)
  create mode 100644 board/udoo/a62/Kconfig
  create mode 100644 board/udoo/a62/MAINTAINERS
@@ -38,10 +37,10 @@ Signed-off-by: Drew Moseley <drew.moseley@northern.tech>
  create mode 100644 include/configs/udoo_a62.h
 
 diff --git a/arch/arm/mach-imx/mx6/Kconfig b/arch/arm/mach-imx/mx6/Kconfig
-index f1f41d5..4a3fa5a 100644
+index 23c8b1d582..b6264682f3 100644
 --- a/arch/arm/mach-imx/mx6/Kconfig
 +++ b/arch/arm/mach-imx/mx6/Kconfig
-@@ -479,6 +479,10 @@ config TARGET_SAMTEC_VINING_2000
+@@ -494,6 +494,10 @@ config TARGET_SAMTEC_VINING_2000
  	select MX6SX
  	imply CMD_DM
  
@@ -52,7 +51,7 @@ index f1f41d5..4a3fa5a 100644
  config TARGET_WANDBOARD
  	bool "wandboard"
  	select BOARD_LATE_INIT
-@@ -568,6 +572,7 @@ source "board/toradex/colibri-imx6ull/Kconfig"
+@@ -584,6 +588,7 @@ source "board/toradex/colibri-imx6ull/Kconfig"
  source "board/k+p/kp_imx6q_tpc/Kconfig"
  source "board/udoo/quad_dual/Kconfig"
  source "board/udoo/neo/Kconfig"
@@ -62,7 +61,7 @@ index f1f41d5..4a3fa5a 100644
  
 diff --git a/board/udoo/a62/Kconfig b/board/udoo/a62/Kconfig
 new file mode 100644
-index 0000000..87a5c29
+index 0000000000..87a5c29a43
 --- /dev/null
 +++ b/board/udoo/a62/Kconfig
 @@ -0,0 +1,15 @@
@@ -83,7 +82,7 @@ index 0000000..87a5c29
 +endif
 diff --git a/board/udoo/a62/MAINTAINERS b/board/udoo/a62/MAINTAINERS
 new file mode 100644
-index 0000000..f2add5a
+index 0000000000..f2add5afdf
 --- /dev/null
 +++ b/board/udoo/a62/MAINTAINERS
 @@ -0,0 +1,7 @@
@@ -96,7 +95,7 @@ index 0000000..f2add5a
 +
 diff --git a/board/udoo/a62/Makefile b/board/udoo/a62/Makefile
 new file mode 100644
-index 0000000..751e41c
+index 0000000000..751e41ce2b
 --- /dev/null
 +++ b/board/udoo/a62/Makefile
 @@ -0,0 +1,12 @@
@@ -114,7 +113,7 @@ index 0000000..751e41c
 +obj-$(CONFIG_SPL_BUILD)  	 += spl.o 
 diff --git a/board/udoo/a62/a62.c b/board/udoo/a62/a62.c
 new file mode 100644
-index 0000000..01b7ab6
+index 0000000000..01b7ab613a
 --- /dev/null
 +++ b/board/udoo/a62/a62.c
 @@ -0,0 +1,519 @@
@@ -639,7 +638,7 @@ index 0000000..01b7ab6
 +);
 diff --git a/board/udoo/a62/detectboard.h b/board/udoo/a62/detectboard.h
 new file mode 100644
-index 0000000..dbf0ea9
+index 0000000000..dbf0ea9bbf
 --- /dev/null
 +++ b/board/udoo/a62/detectboard.h
 @@ -0,0 +1,13 @@
@@ -658,7 +657,7 @@ index 0000000..dbf0ea9
 +
 diff --git a/board/udoo/a62/spl.c b/board/udoo/a62/spl.c
 new file mode 100644
-index 0000000..193d893
+index 0000000000..193d893f02
 --- /dev/null
 +++ b/board/udoo/a62/spl.c
 @@ -0,0 +1,320 @@
@@ -983,7 +982,7 @@ index 0000000..193d893
 +}
 +#endif /* CONFIG_SPL_BUILD */
 diff --git a/board/udoo/common/Makefile b/board/udoo/common/Makefile
-index 0729cb8..09af343 100644
+index 0729cb8798..09af343f6d 100644
 --- a/board/udoo/common/Makefile
 +++ b/board/udoo/common/Makefile
 @@ -4,4 +4,4 @@
@@ -994,7 +993,7 @@ index 0729cb8..09af343 100644
 +obj-y  := trim.o udooinit.o
 diff --git a/board/udoo/common/udooinit.c b/board/udoo/common/udooinit.c
 new file mode 100644
-index 0000000..5098bee
+index 0000000000..5098beed4b
 --- /dev/null
 +++ b/board/udoo/common/udooinit.c
 @@ -0,0 +1,54 @@
@@ -1054,7 +1053,7 @@ index 0000000..5098bee
 +
 diff --git a/board/udoo/common/udooinit.h b/board/udoo/common/udooinit.h
 new file mode 100644
-index 0000000..47c099e
+index 0000000000..47c099e539
 --- /dev/null
 +++ b/board/udoo/common/udooinit.h
 @@ -0,0 +1,16 @@
@@ -1076,7 +1075,7 @@ index 0000000..47c099e
 +#endif
 diff --git a/configs/udoo_a62_defconfig b/configs/udoo_a62_defconfig
 new file mode 100644
-index 0000000..1b35fc9
+index 0000000000..1b35fc963a
 --- /dev/null
 +++ b/configs/udoo_a62_defconfig
 @@ -0,0 +1,37 @@
@@ -1118,29 +1117,29 @@ index 0000000..1b35fc9
 +CONFIG_APX_WATCHDOG=y
 +CONFIG_MXC_SPI_CSHOLD=y
 diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index 02f4e1e..fbbfa69 100644
+index 115fc4551f..d13d54892f 100644
 --- a/drivers/watchdog/Kconfig
 +++ b/drivers/watchdog/Kconfig
-@@ -118,4 +118,7 @@ config IMX_WATCHDOG
- 	   Select this to enable the IMX and LSCH2 of Layerscape watchdog
- 	   driver.
+@@ -157,4 +157,7 @@ config WDT_MPC8xx
+ 	help
+ 	   Select this to enable mpc8xx watchdog timer
  
 +config APX_WATCHDOG
 +        bool "Support watchdog APX drivers"
 +
  endmenu
 diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
-index 08406ca..c2489db 100644
+index d901240ad1..f047d7c02a 100644
 --- a/drivers/watchdog/Makefile
 +++ b/drivers/watchdog/Makefile
-@@ -23,3 +23,4 @@ obj-$(CONFIG_BCM2835_WDT)       += bcm2835_wdt.o
- obj-$(CONFIG_WDT_ORION) += orion_wdt.o
- obj-$(CONFIG_WDT_CDNS) += cdns_wdt.o
+@@ -27,3 +27,4 @@ obj-$(CONFIG_WDT_CDNS) += cdns_wdt.o
  obj-$(CONFIG_MPC8xx_WATCHDOG) += mpc8xx_wdt.o
+ obj-$(CONFIG_WDT_MT7621) += mt7621_wdt.o
+ obj-$(CONFIG_WDT_MTK) += mtk_wdt.o
 +obj-$(CONFIG_APX_WATCHDOG) += apx_watchdog.o
 diff --git a/drivers/watchdog/apx_watchdog.c b/drivers/watchdog/apx_watchdog.c
 new file mode 100644
-index 0000000..909e908
+index 0000000000..909e908bf9
 --- /dev/null
 +++ b/drivers/watchdog/apx_watchdog.c
 @@ -0,0 +1,48 @@
@@ -1194,7 +1193,7 @@ index 0000000..909e908
 +
 diff --git a/include/configs/udoo_a62.h b/include/configs/udoo_a62.h
 new file mode 100644
-index 0000000..aa07a34
+index 0000000000..aa07a3443b
 --- /dev/null
 +++ b/include/configs/udoo_a62.h
 @@ -0,0 +1,207 @@
@@ -1405,3 +1404,6 @@ index 0000000..aa07a34
 +
 +
 +#endif			       /* __CONFIG_H * */
+-- 
+2.22.0
+
