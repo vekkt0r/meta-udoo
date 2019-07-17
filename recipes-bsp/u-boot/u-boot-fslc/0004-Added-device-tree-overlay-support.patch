@@ -1,4 +1,4 @@
-From 7544e5693d1b7067e032bea42e7d6a9cc7d3dc73 Mon Sep 17 00:00:00 2001
+From 1604147422e64b8ba001a88b1b5d1f507aeb42dc Mon Sep 17 00:00:00 2001
 From: Christian Ege <k4230r6@gmail.com>
 Date: Sat, 31 Dec 2016 06:46:15 +0100
 Subject: [PATCH] Added device tree overlay support
@@ -23,11 +23,11 @@ index 1b35fc963a..b02fb02c99 100644
  CONFIG_MXC_SPI_CSHOLD=y
 +CONFIG_OF_LIBFDT_OVERLAY=y
 diff --git a/configs/udoo_neo_defconfig b/configs/udoo_neo_defconfig
-index eac1dc9aee..a38db9c8ae 100644
+index e8df11db66..6bbf7f3db2 100644
 --- a/configs/udoo_neo_defconfig
 +++ b/configs/udoo_neo_defconfig
-@@ -32,3 +32,4 @@ CONFIG_PHYLIB=y
- CONFIG_PHY_MICREL=y
+@@ -34,3 +34,4 @@ CONFIG_PHY_MICREL=y
+ CONFIG_PHY_MICREL_KSZ8XXX=y
  CONFIG_MII=y
  CONFIG_OF_LIBFDT=y
 +CONFIG_OF_LIBFDT_OVERLAY=y
