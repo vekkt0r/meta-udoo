@@ -5,10 +5,10 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6 \
 "
 
-SRC_URI = "file://uEnv.txt \
+SRC_URI_udoobsp = "file://uEnv.txt \
 "
 
-do_install () {
+do_install_udoobsp () {
     install -d ${D}/boot
     install -m 0755 ${WORKDIR}/uEnv.txt ${D}/boot
     if [ -n "${VIDEO_OUTPUT}" ]; then

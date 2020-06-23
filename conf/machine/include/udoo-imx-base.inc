@@ -1,3 +1,5 @@
+require conf/machine/include/udoo-default-settings.inc
+
 # Vivante stuff
 MACHINE_USES_VIVANTE_KERNEL_DRIVER_MODULE ?= "1"
 
