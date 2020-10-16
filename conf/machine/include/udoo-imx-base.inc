@@ -1,3 +1,5 @@
+OVERRIDES =. "udoo:"
+
 # Vivante stuff
 MACHINE_USES_VIVANTE_KERNEL_DRIVER_MODULE ?= "1"
 
